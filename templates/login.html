@@ -90,15 +90,16 @@
 
 <body>
     <div id="myapp">
-    <div class="container-fluid" style="background-image: url('/static/images/mobile.svg'); height:'100vh';" >
+    <div class="container-fluid" style="background-image: url('/static/fireworks-2.jpg'); height:'100vh';" >
         <div class="container">
             <div class="text-center">
+                    <div >
                         <button v-if="register" v-on:click="reverse" type="button" class="btn btn-primary">Login</button>
                         <button v-if="login" v-on:click="reverse" type="button" class="btn btn-primary">Register</button>
-                        
+                    </div>
                             <div v-if="login">
                                 <section class="fdb-block py-0">
-                                        <div class="container py-5 my-5" style="background-image: url('/static/images/registration.jpg');">
+                                        <div class="container py-5 my-5" style="background-image: url('/static/map-1.jpg');">
                                             <div class=" row justify-content-end">
                                             <div class="col-12 col-md-8 col-lg-6 col-xl-5 text-left">
                                                 <div class="fdb-box">
@@ -108,6 +109,7 @@
                                                     <p class="lead">Right at the coast of the Semantics, a large language ocean. A small river named Duden.</p>
                                                     </div>
                                                 </div>
+                                            <form>
                                                 <div class="row">
                                                     <div class="col mt-4">
                                                     <input type="text" class="form-control" placeholder="Email">
@@ -115,7 +117,7 @@
                                                 </div>
                                                 <div class="row mt-4">
                                                     <div class="col">
-                                                    <input type="password" class="form-control" placeholder="Password">
+                                                    <input type="password" autocomplete="true"  class="form-control" placeholder="Password">
                                                     </div>
                                                 </div>
                                                 <div class="row mt-4">
@@ -124,6 +126,7 @@
                                                     </div>
                                                 </div>
                                                 </div>
+                                            </form>
                                             </div>
                                             </div>
                                         </div>
@@ -150,35 +153,38 @@
                                                         </div>
                                                     </div>
                                                 </div>
+                                            <form>
                                                 <div class="row">
                                                     <div class="col mt-4">
+                                                        <div>{{ name }}</div>
                                                     <input type="text" v-model="name" class="form-control" name='name' placeholder="Name">
                                                     </div>
                                                 </div>
                                                 <div class="row mt-4">
                                                         <div class="col">
+                                                                <div> Bonjour {{ username }}</div>
                                                         <input type="text" v-model="username" class="form-control" name='username' placeholder="Username">
                                                         </div>
                                                 </div>
                                                 <div class="row mt-4">
                                                     <div class="col">
+                                                            <div>{{ email }}</div>
                                                         <input type="email" v-model="email" class="form-control" name='email' placeholder="Email">
                                                     </div>
                                                 </div>
                                                 <div class="row mt-4">
                                                     <div class="col">
+                                                            <div>{{ phone }}</div>
                                                     <input type="tel" v-model="phone" id="phone" name="phone" class="form-control" placeholder="Phone">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mt-4">
                                                     <div class="col">
-                                                        <input type="password" v-model="password" class="form-control" name="repass" placeholder="Password">
+                                                        <input type="password" v-model="password" autocomplete="true" class="form-control" name="repass" placeholder="Password">
                                                     </div>
                                                 </div>
                                                 
-                                                
-    
                                                 <div class="row mt-4">
                                                     <div class="col">
                                                     <button v-on:click="sendregister" class="btn btn-primary" type="button">Submit</button>
@@ -186,6 +192,7 @@
                                                     </div>
                                                 </div>
                                                 </div>
+                                            </form>
                                             </div>
                                             </div>
                                         </div>
@@ -197,10 +204,12 @@
         </div>
         </div>
     </div>
-    <script src="https://unpkg.com/imask"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  
+    <script src="/static/unpkg.js"></script>
+   <!--- <script src="/static/vue.js"></script>
+    <script src="/static/axios.js"></script>
+    -->
     <script>
         new Vue({
             el: '#myapp',
@@ -229,9 +238,9 @@
                     this.register = !(this.register)
                 },
                 sendregister: function () {
-                    //axios.defaults.xsrfCookieName = 'csrftoken'
+                     axios.defaults.xsrfCookieName = 'csrftoken'
                     //axios.defaults.xsrfHeaderName = 'X-CSRFToken'
-                    axios.post('http://127.0.0.1:8000/post', {
+                    axios.post('http://127.0.0.1:8000/post/', {
                     name: '' + this.name,
                     username: '' + this.username,
                     email: '' + this.email,
@@ -242,15 +251,14 @@
                             console.log(response)
                             isSuccess=false
                             this.result= response.data
-                            console.log(result.success)
                         })
                         .catch((err) => {
                             console.log(err);
                             isSuccess=false
                     })
-                },
-
+                }
             }
+
         })
     </script>
     <script>
